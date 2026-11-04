@@ -20,6 +20,10 @@ function makeProduct(id: number, name: string): Product {
     reviewAverage: 4,
     reviewCount: 10,
     currency: 'EUR',
+    brand: 'Groove',
+    brandSlug: 'groove',
+    color: 'Black',
+    colorHex: '#17171a',
   }
 }
 

@@ -12,6 +12,12 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Vendored reference material, not application code: the original Nuxt
+    // storefront we matched, generated docs, and scratch. Linting them drowned
+    // `npm run lint` in 900+ errors from code we do not own or ship.
+    "source-nuxt/**",
+    "docs/**",
+    "scratchpad/**",
   ]),
 ]);
 

@@ -19,6 +19,10 @@ function product(id: number, finalPrice: number): Product {
     reviewAverage: 4,
     reviewCount: 1,
     currency: 'EUR',
+    brand: 'Groove',
+    brandSlug: 'groove',
+    color: 'Black',
+    colorHex: '#17171a',
   }
 }
 

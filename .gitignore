@@ -51,11 +51,15 @@ coverage/
 .env.*
 !.env.example
 
-# .claude — ignore the scratch, keep the tooling (agents/commands/hooks/rules/settings.json stay tracked)
-.claude/messages/          # Rule 8 drafts, mine alone
+# .claude — ignore the scratch, keep the tooling (agents/commands/hooks/rules/settings.json stay tracked).
+# Patterns must be alone on their line: git has NO trailing-comment support, so an inline
+# "# ..." became part of the pattern and left .claude/messages/ UNignored (Rule 8 breach).
+# Rule 8 drafts, mine alone:
+.claude/messages/
 .claude/tmp/
 .claude/worktrees/
-.claude/settings.local.json  # machine-specific paths + permission grants
+# machine-specific paths + permission grants:
+.claude/settings.local.json
 .claude/**/.DS_Store
 
 # the cloned source repo is study-only, not part of our app

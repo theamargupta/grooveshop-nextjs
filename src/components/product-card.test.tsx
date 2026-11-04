@@ -20,6 +20,10 @@ const base: Product = {
   reviewAverage: 4.8,
   reviewCount: 246,
   currency: 'EUR',
+  brand: 'Groove',
+  brandSlug: 'groove',
+  color: 'Black',
+  colorHex: '#17171a',
 }
 
 function renderProductCard(product: Product) {
