@@ -2,28 +2,49 @@ import { Suspense } from 'react'
 import { ProductFilters } from '@/components/product-filters'
 import { ProductGrid } from '@/components/product-grid'
 import { ProductSidebar } from '@/components/product-sidebar'
-import { listCategories, listProducts } from '@/lib/data/products'
+import { listBrands, listCategories, listColors, listProducts } from '@/lib/data/products'
 
 function firstValue(value: string | string[] | undefined): string | undefined {
   return Array.isArray(value) ? value[0] : value
+}
+
+function priceValue(value: string | undefined): number | undefined {
+  if (value === undefined || value === '') {
+    return undefined
+  }
+
+  const price = Number(value)
+  return Number.isFinite(price) ? price : undefined
 }
 
 async function ProductResults({ searchParams }: Pick<PageProps<'/products'>, 'searchParams'>) {
   const params = await searchParams
   const category = firstValue(params.category)
   const search = firstValue(params.q)
-  const products = listProducts({ category, search })
+  const brand = firstValue(params.brand)
+  const color = firstValue(params.color)
+  const minPrice = priceValue(firstValue(params.minPrice))
+  const maxPrice = priceValue(firstValue(params.maxPrice))
+  const products = listProducts({ category, search, brand, color, minPrice, maxPrice })
   const allProducts = listProducts()
   const categories = listCategories().map((item) => ({
     ...item,
     count: allProducts.filter((product) => product.categorySlug === item.slug).length,
+  }))
+  const brands = listBrands().map((item) => ({
+    ...item,
+    count: allProducts.filter((product) => product.brandSlug === item.slug).length,
+  }))
+  const colors = listColors().map((item) => ({
+    ...item,
+    count: allProducts.filter((product) => product.color === item.name).length,
   }))
 
   return (
     <>
       <ProductFilters categories={categories} totalCount={allProducts.length} />
       <section aria-label="Products" className="mt-9 grid gap-6 lg:grid-cols-[15rem_1fr]">
-        <ProductSidebar categories={categories} />
+        <ProductSidebar brands={brands} categories={categories} colors={colors} />
         <div>
           <div className="mb-5 flex items-center justify-between gap-4">
             <p className="text-sm font-extrabold text-zinc-600">{products.length} products</p>

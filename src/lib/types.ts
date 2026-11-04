@@ -24,6 +24,10 @@ export interface Product {
   reviewCount: number
   /** ISO 4217 code, e.g. "EUR". */
   currency: string
+  brand: string
+  brandSlug: string
+  color: string
+  colorHex: string
 }
 
 export interface CartItem {
@@ -48,7 +52,21 @@ export interface Category {
   name: string
 }
 
+export interface Brand {
+  slug: string
+  name: string
+}
+
+export interface ProductColor {
+  name: string
+  hex: string
+}
+
 export interface ListProductsOptions {
   category?: string
   search?: string
+  brand?: string
+  color?: string
+  minPrice?: number
+  maxPrice?: number
 }
