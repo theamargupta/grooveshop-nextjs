@@ -11,7 +11,7 @@ interface ThemeContextValue {
 }
 
 const ThemeContext = createContext<ThemeContextValue>({
-  theme: 'system',
+  theme: 'light',
   toggleTheme: () => undefined,
 })
 
@@ -22,9 +22,9 @@ function isTheme(value: string | null): value is Theme {
 function readTheme(): Theme {
   try {
     const storedTheme = window.localStorage.getItem(STORAGE_KEY)
-    return isTheme(storedTheme) ? storedTheme : 'system'
+    return isTheme(storedTheme) ? storedTheme : 'light'
   } catch {
-    return 'system'
+    return 'light'
   }
 }
 
@@ -43,7 +43,7 @@ function nextTheme(theme: Theme): Theme {
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme, setTheme] = useState<Theme>(() => (
-    typeof window === 'undefined' ? 'system' : readTheme()
+    typeof window === 'undefined' ? 'light' : readTheme()
   ))
 
   useEffect(() => {
