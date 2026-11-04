@@ -15,6 +15,13 @@ const nextConfig: NextConfig = {
   /* config options here */
   cacheComponents: true,
   partialPrefetching: true,
+  images: {
+    // The product placeholders are our own local SVGs. next/image blocks SVG
+    // optimization by default; allow it, sandboxed to neutralise any script in an SVG.
+    dangerouslyAllowSVG: true,
+    contentDispositionType: 'attachment',
+    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
+  },
   async headers() {
     return [{ source: '/:path*', headers: securityHeaders }]
   },
