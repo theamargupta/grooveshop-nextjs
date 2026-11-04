@@ -99,3 +99,12 @@ Format per entry:
   products, security headers live; screenshot: docs/reports/screenshots/prod-products.png.
 - Bug found + fixed on prod: product images blank -> next/image blocks SVG by default;
   enabled dangerouslyAllowSVG with a sandboxed CSP. Re-deployed, images verified rendering.
+### [Design D.1] Match GrooveShop demo UI — Codex lane `gs-D1-design` — 2026-11-04
+- Measured the live demo's tokens (lime #D6F94A, ink #17171A, Manrope, orange stars) and wrote
+  docs/specs/design-match.md.
+- Codex restyled header, product card (tinted image + sale badge + wishlist + "+ Add" pill + orange
+  stars + struck price), listing (breadcrumb, pills-with-counts, filter sidebar), home, detail, cart,
+  checkout — 46 tests + both E2E green; reverted webpack to Turbopack build.
+- Deployed + screenshot-compared vs demo: header/card/listing now match the demo's design language.
+- Remaining polish planned in docs/plans/design-expand.md (realistic images, ~50 products + real
+  filters, full homepage sections, dark mode + wishlist).
