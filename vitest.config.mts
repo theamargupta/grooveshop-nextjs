@@ -15,8 +15,13 @@ export default defineConfig({
       provider: 'v8',
       reporter: ['text', 'html', 'json-summary'],
       reportsDirectory: './docs/reports/coverage',
-      include: ['src/**/*.{ts,tsx}'],
-      exclude: ['src/**/*.{test,spec}.{ts,tsx}', 'src/**/*.d.ts', 'src/app/layout.tsx'],
+      // Unit coverage targets the unit-testable surface: pure logic + presentational/client
+      // components. Route files under src/app/** are Server/Client *pages* exercised by the
+      // Playwright E2E suite (Phase 7), not by unit tests, so they are excluded here to keep
+      // this number honest rather than inflated/deflated by integration-only code.
+      include: ['src/lib/**/*.{ts,tsx}', 'src/components/**/*.{ts,tsx}'],
+      exclude: ['src/**/*.{test,spec}.{ts,tsx}', 'src/**/*.d.ts'],
+      thresholds: { statements: 80, branches: 75, functions: 80, lines: 80 },
     },
   },
 })
