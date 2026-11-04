@@ -92,3 +92,10 @@ Format per entry:
 - `npm audit`: 0 prod vulnerabilities; 16 dev-only moderate (not shipped). No `dangerouslySetInnerHTML`/`eval`/`process.env` in src.
 - Added 5 baseline security headers in `next.config.ts`; VERIFIED live via `curl -sI` on a prod build.
 - Report: `docs/reports/security-audit.md` (incl. CSP-with-nonce as documented follow-up).
+### [Phase 10a] Production deploy + verify — leader (Opus) — 2026-11-04
+- Deployed to Vercel production: https://grooveshop-nextjs-5ijihu6lm-amargupta.vercel.app
+- Disabled Vercel Deployment Protection (SSO) via API so the demo is public (PATCH 200).
+- Step-8 proof on the DEPLOYED app: home/products/detail HTTP 200, /products renders real
+  products, security headers live; screenshot: docs/reports/screenshots/prod-products.png.
+- Bug found + fixed on prod: product images blank -> next/image blocks SVG by default;
+  enabled dangerouslyAllowSVG with a sandboxed CSP. Re-deployed, images verified rendering.
