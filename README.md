@@ -1,36 +1,66 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# GrooveShop — Nuxt → Next.js conversion
 
-## Getting Started
+A production-quality conversion of the core commerce flow of the
+[GrooveShop Nuxt storefront](https://github.com/vasilistotskas/grooveshop-storefront-ui-node-nuxt)
+to **Next.js**, built with an agentic AI workflow and delivered with tests, coverage,
+end-to-end video, and a security audit.
 
-First, run the development server:
+> Take-home for Kombee (CTO round). The source is a Nuxt 4, multi-tenant, server-rendered
+> storefront (~613 Vue components, 82 routes) whose data comes from a separate Django API.
+> A full 1:1 port is neither feasible nor the point — this delivers a **complete vertical
+> slice** done to a high standard, with the scope decided and stated openly.
+
+## What's in scope (the slice)
+
+Home → product listing (category + search filters) → product detail → cart → checkout → order
+placed. Plus: responsive layout, loading/empty/error states, accessible markup, a typed mock
+data layer generated from the project's own OpenAPI schema.
+
+## Deliberately out of scope (and why)
+
+Multi-tenant host resolution, the Redis SSR cache, the Django backend, maps, loyalty, gift
+cards, and the blog. The real backend is not part of the repo, so data is a **mock layer** whose
+shapes are an honest subset of `source-nuxt/openapi/schema.json`. Scope is a decision, not a gap.
+
+## Stack
+
+Next.js 16 (App Router) · React 19 · TypeScript · Tailwind v4 · Vitest + Testing Library ·
+Playwright. No `any`, no silent failures; files kept small and single-responsibility.
+
+## Run it
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev        # http://localhost:3000
+npm run build && npm start   # production
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Quality — the reports
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+| Area | Command | Report |
+|---|---|---|
+| Unit tests + coverage | `npm run test:coverage` | `docs/reports/coverage-summary.md` (89% on lib+components) |
+| E2E (Playwright) + video | `npm run test:e2e` | `docs/reports/e2e-summary.md`, video in `docs/reports/e2e-video/` |
+| Security audit | `npm audit` | `docs/reports/security-audit.md` (0 prod vulns, headers live) |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## How it was built — the agentic workflow
 
-## Learn More
+This repo was built with a disciplined build loop, narrated in `docs/04-prompts-log.md`:
 
-To learn more about Next.js, take a look at the following resources:
+1. **Docs-first + scope** — study the source, decide the slice (`docs/00`–`03`).
+2. **Model mix** — specs, reviews and risky work on the strongest model; **code generation
+   delegated to Codex** lanes, each phase gated before merge.
+3. **Test-first** — every phase starts with a spec and a failing test, then code to green.
+4. **Gated phases** — typecheck + lint + unit + build green before each merge to `main`.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Full process log and prompts: **`docs/04-prompts-log.md`**. Phase specs/plans: `docs/specs/`, `docs/plans/`.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Project layout
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```
+src/lib/        mock data layer, cart logic, checkout validation, price formatting (unit-tested)
+src/components/ presentational + client components (ProductCard, ProductGrid, filters, cart, header)
+src/app/        App Router pages: home, /products, /products/[slug], /cart, /checkout, /checkout/success
+e2e/            Playwright specs
+docs/           brief, source analysis, scope, plan, prompts log, reports
+```
