@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { CartCountBadge } from './cart-count-badge'
 
 export function SiteHeader() {
   return (
@@ -10,6 +11,7 @@ export function SiteHeader() {
         <nav aria-label="Primary navigation" className="flex items-center gap-5 text-sm font-semibold text-slate-700">
           <Link className="rounded focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-indigo-600 hover:text-indigo-700" href="/">Home</Link>
           <Link className="rounded focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-indigo-600 hover:text-indigo-700" href="/products">Products</Link>
+          <CartCountBadge />
         </nav>
       </div>
     </header>
