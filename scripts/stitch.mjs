@@ -19,15 +19,19 @@ const TMP = join(REC, 'visuals', '_segments')
 const OUT = join(REC, 'agentic-journey.mp4')
 const W = 1920, H = 1080, FPS = 25
 
-// Each section → ordered list of visuals. A card is a still; a .webm is motion.
-// 04 reuses the real E2E purchase-flow video; 08/09 use the live-app captures.
+// Each section → ordered list of visuals, so no single card sits on screen too
+// long (a cut every ~15-20s keeps it moving). Cards are stills with a slow Ken
+// Burns zoom; .webm are live-app / E2E motion. Crisp cut: 6 sections, ~4 min.
 const E2E = join(ROOT, 'docs/reports/e2e-video/full-purchase-flow.webm')
+const appMain = { video: join(VIS, 'app-main.webm') }
+const appTour = { video: join(VIS, 'app-tour.webm') }
 const SECTIONS = {
-  '00': [card('00')], '01': [card('01')], '02': [card('02')], '03': [card('03')],
-  '04': [card('04'), { video: E2E }],
-  '05': [card('05')], '06': [card('06')], '07': [card('07')],
-  '08': [{ video: join(VIS, 'app-main.webm') }],
-  '09': [{ video: join(VIS, 'app-tour.webm') }, card('09')],
+  '00': [card('00'), appMain],                       // pitch: title → live app b-roll
+  '01': [card('01'), card('02')],                    // scope card → the build-loop pipeline
+  '02': [card('03'), appMain],                       // model mix → merged app b-roll
+  '03': [card('04'), { video: E2E }, card('05')],    // coverage → E2E flow → the image bug
+  '04': [card('07'), appMain],                        // security → driving the live app
+  '05': [appTour, card('09')],                        // demo-match tour → closing card
 }
 function card(id) { return { image: join(VIS, `card-${id}.png`) } }
 
@@ -40,6 +44,8 @@ function probeDur(file) {
 const SCALE = `scale=${W}:${H}:force_original_aspect_ratio=decrease,pad=${W}:${H}:(ow-iw)/2:(oh-ih)/2:color=0x17171A,setsar=1,format=yuv420p`
 
 function buildStill(img, dur, out) {
+  // Static card, encoded fast. Engagement comes from short narration + frequent cuts
+  // (2-3 visuals per section) + live-app b-roll, not per-frame zoom (zoompan was too slow).
   ff(['-loop', '1', '-t', dur.toFixed(3), '-i', img, '-r', String(FPS),
     '-vf', `scale=${W}:${H},format=yuv420p`, '-c:v', 'libx264', '-preset', 'veryfast', '-pix_fmt', 'yuv420p', out])
 }
