@@ -18,9 +18,9 @@ export function SiteHeader() {
         <nav aria-label="Primary navigation" className="hidden items-center gap-4 text-sm font-bold text-muted lg:flex">
           <Link className="rounded transition hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-lime" href="/">Home</Link>
           <Link className="rounded transition hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-lime" href="/products">Products</Link>
-          <Link className="rounded transition hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-lime" href="/products?category=audio">Offers</Link>
-          <Link className="rounded transition hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-lime" href="/products">Blog</Link>
-          <Link className="rounded transition hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-lime" href="/products">Rewards</Link>
+          <Link className="rounded transition hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-lime" href="/offers">Offers</Link>
+          <Link className="rounded transition hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-lime" href="/blog">Blog</Link>
+          <Link className="rounded transition hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-lime" href="/rewards">Rewards</Link>
           <Link className="rounded transition hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-lime" href="/checkout">Checkout</Link>
         </nav>
         <form action="/products" className="ml-auto hidden min-w-44 max-w-xs flex-1 items-center rounded-full bg-background px-3 sm:flex">
@@ -30,7 +30,7 @@ export function SiteHeader() {
         </form>
         <div className="ml-auto flex items-center gap-2 sm:ml-0">
           <ThemeToggle />
-          <Link aria-label="Wishlist" className="relative grid size-10 place-items-center rounded-full border border-line text-lg text-foreground transition hover:border-foreground focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-lime" href="/products">
+          <Link aria-label="Wishlist" className="relative grid size-10 place-items-center rounded-full border border-line text-lg text-foreground transition hover:border-foreground focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-lime" href="/wishlist">
             <span aria-hidden="true">♡</span>
             {ids.length > 0 ? <span aria-hidden="true" className="absolute -right-1 -top-1 grid min-w-4 place-items-center rounded-full bg-lime px-1 text-[10px] font-extrabold leading-4 text-ink">{ids.length}</span> : null}
           </Link>
