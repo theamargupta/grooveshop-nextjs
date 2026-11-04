@@ -39,5 +39,15 @@ Format per entry:
   https://github.com/vercel/next.js/blob/canary/docs/01-app/02-guides/testing/vitest.mdx
 - Scripts: `test`, `test:run`, `test:coverage`, `test:e2e`.
 
+### [Phase 2] Mock data layer — model mix (Opus spec, Codex impl) — 2026-11-04
+- Contract by Opus: `docs/specs/data-layer.md`, `src/lib/types.ts`, 8 red tests
+  `src/lib/data/products.test.ts` (red: `Failed to resolve import "./products"`).
+- Handed to **Codex lane `gs-P2-data`** with `docs/plans/phase2-data.md` (Who: codex · high).
+- Codex implemented `fixtures.ts` (140 lines, 8 products / 3 categories / sale + out-of-stock)
+  + `products.ts` (listProducts/getProductBySlug/listCategories, pure, null-safe).
+- Opus review + merge: re-ran outside Codex sandbox on merged `main` → **13 tests pass**, tsc clean.
+- Gotcha: tsc scanned the cloned `source-nuxt/` → added it + `.claude/worktrees` to tsconfig `exclude`.
+
 <!-- next entries appended during the build -->
+
 
