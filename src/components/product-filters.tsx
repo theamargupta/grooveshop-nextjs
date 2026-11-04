@@ -5,10 +5,11 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import type { Category } from '@/lib/types'
 
 interface ProductFiltersProps {
-  categories: Category[]
+  categories: Array<Category & { count?: number }>
+  totalCount?: number
 }
 
-export function ProductFilters({ categories }: ProductFiltersProps) {
+export function ProductFilters({ categories, totalCount }: ProductFiltersProps) {
   const pathname = usePathname()
   const router = useRouter()
   const searchParams = useSearchParams()
@@ -29,11 +30,11 @@ export function ProductFilters({ categories }: ProductFiltersProps) {
   const selectedCategory = searchParams.get('category') ?? ''
 
   return (
-    <section aria-label="Product filters" className="space-y-4">
-      <label className="block max-w-md">
-        <span className="mb-2 block text-sm font-semibold text-slate-800">Search products</span>
+    <section aria-label="Product filters" className="space-y-5">
+      <label className="block max-w-lg">
+        <span className="mb-2 block text-sm font-extrabold text-ink">Search products</span>
         <input
-          className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-950 outline-none transition focus:border-indigo-600 focus:ring-2 focus:ring-indigo-200"
+          className="w-full rounded-full border border-line bg-white px-5 py-3 text-ink outline-none transition placeholder:text-zinc-400 focus:border-ink focus:ring-2 focus:ring-lime"
           defaultValue={searchParams.get('q') ?? ''}
           onChange={(event) => updateSearch('q', event.target.value)}
           placeholder="Search products"
@@ -42,20 +43,20 @@ export function ProductFilters({ categories }: ProductFiltersProps) {
       </label>
       <div className="flex flex-wrap gap-2" aria-label="Categories">
         <button
-          className={`rounded-full px-4 py-2 text-sm font-semibold transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ${selectedCategory === '' ? 'bg-slate-950 text-white' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'}`}
+          className={`rounded-full px-4 py-2 text-sm font-extrabold transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lime ${selectedCategory === '' ? 'bg-ink text-white' : 'bg-white text-zinc-600 ring-1 ring-line hover:bg-zinc-100'}`}
           onClick={() => updateSearch('category', '')}
           type="button"
         >
-          All products
+          <span>All products</span>{totalCount === undefined ? null : <span aria-hidden="true" className="ml-1.5 text-xs opacity-70">{totalCount}</span>}
         </button>
         {categories.map((category) => (
           <button
-            className={`rounded-full px-4 py-2 text-sm font-semibold transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ${selectedCategory === category.slug ? 'bg-slate-950 text-white' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'}`}
+            className={`rounded-full px-4 py-2 text-sm font-extrabold transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lime ${selectedCategory === category.slug ? 'bg-ink text-white' : 'bg-white text-zinc-600 ring-1 ring-line hover:bg-zinc-100'}`}
             key={category.slug}
             onClick={() => updateSearch('category', category.slug)}
             type="button"
           >
-            {category.name}
+            <span>{category.name}</span>{category.count === undefined ? null : <span aria-hidden="true" className="ml-1.5 text-xs opacity-70">{category.count}</span>}
           </button>
         ))}
       </div>

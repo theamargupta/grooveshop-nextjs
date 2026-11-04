@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
+import { AddToCart } from './add-to-cart'
 import { formatPrice } from '@/lib/format-price'
 import type { Product } from '@/lib/types'
 
@@ -15,39 +16,40 @@ export function ProductCard({ product }: ProductCardProps) {
 
   return (
     <article
-      className="group overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition-shadow hover:shadow-md"
+      className="group overflow-hidden rounded-2xl border border-line bg-white shadow-sm transition duration-200 hover:-translate-y-0.5 hover:shadow-lg"
       data-stock={product.stock === 0 ? 'out-of-stock' : 'in-stock'}
     >
-      <Image
-        alt={product.name}
-        className="aspect-square w-full bg-slate-100 object-cover"
-        height={600}
-        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-        src={product.image}
-        width={600}
-      />
-      <div className="space-y-3 p-5">
-        <div className="flex items-start justify-between gap-3">
-          <div>
-            <p className="text-sm font-medium text-slate-500">{product.categoryName}</p>
-            <h2 className="mt-1 text-lg font-semibold text-slate-950">
-              <Link className="focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" href={`/products/${product.slug}`}>
-                {product.name}
-              </Link>
-            </h2>
-          </div>
-          {discount !== null ? (
-            <span className="shrink-0 rounded-full bg-rose-100 px-2.5 py-1 text-xs font-bold text-rose-700">-{discount}%</span>
-          ) : null}
-        </div>
-        <div className="flex items-baseline gap-2">
-          <span className="text-lg font-bold text-slate-950">{formatPrice(product.finalPrice, product.currency)}</span>
-          {discount !== null && priorPrice !== null ? <del className="text-sm text-slate-500">{formatPrice(priorPrice, product.currency)}</del> : null}
-        </div>
-        <p className="text-sm text-slate-600" aria-label={`${product.reviewAverage} out of 5 stars from ${product.reviewCount} reviews`}>
-          <span aria-hidden="true">★</span> {product.reviewAverage.toFixed(1)} <span className="text-slate-400">({product.reviewCount})</span>
+      <div className="relative m-2 overflow-hidden rounded-xl bg-[#f0f1e8]">
+        <Image
+          alt={product.name}
+          className="aspect-square w-full object-cover transition duration-300 group-hover:scale-[1.03]"
+          height={600}
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+          src={product.image}
+          width={600}
+        />
+        {discount !== null ? <span className="absolute left-3 top-3 rounded-full bg-lime px-2.5 py-1 text-xs font-extrabold text-ink">-{discount}%</span> : null}
+        <button aria-label={`Add ${product.name} to wishlist`} className="absolute right-3 top-3 grid size-9 place-items-center rounded-full bg-white text-lg text-ink shadow-sm transition hover:scale-105 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lime" type="button">
+          <span aria-hidden="true">♡</span>
+        </button>
+        {product.stock > 0 ? <div className="absolute bottom-3 right-3"><AddToCart compact product={product} /></div> : null}
+      </div>
+      <div className="space-y-2 px-5 pb-5 pt-3">
+        <p className="text-xs font-extrabold uppercase tracking-[0.14em] text-zinc-500">{product.categoryName}</p>
+        <h2 className="text-lg font-extrabold leading-6 text-ink">
+          <Link className="rounded focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lime" href={`/products/${product.slug}`}>
+            {product.name}
+          </Link>
+        </h2>
+        <p className="text-sm font-bold text-zinc-600" aria-label={`${product.reviewAverage} out of 5 stars from ${product.reviewCount} reviews`}>
+          <span aria-hidden="true" className="tracking-wide text-amber">★★★★★</span> <span>{product.reviewAverage.toFixed(1)} · {product.reviewCount}</span>
         </p>
-        {product.stock === 0 ? <p className="text-sm font-semibold text-rose-700">Out of stock</p> : null}
+        <div className="flex flex-wrap items-baseline gap-x-2 gap-y-1">
+          <span className="text-lg font-extrabold text-ink">{formatPrice(product.finalPrice, product.currency)}</span>
+          {discount !== null && priorPrice !== null ? <del className="text-sm font-semibold text-zinc-400">{formatPrice(priorPrice, product.currency)}</del> : null}
+        </div>
+        <p className="text-xs font-medium text-zinc-500">Lowest price in 30 days</p>
+        {product.stock === 0 ? <p className="text-sm font-extrabold text-rose-700">Out of stock</p> : null}
       </div>
     </article>
   )

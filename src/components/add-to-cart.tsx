@@ -6,9 +6,10 @@ import type { Product } from '@/lib/types'
 
 interface AddToCartProps {
   product: Product
+  compact?: boolean
 }
 
-export function AddToCart({ product }: AddToCartProps) {
+export function AddToCart({ product, compact = false }: AddToCartProps) {
   const { addItem } = useCart()
   const [wasAdded, setWasAdded] = useState(false)
   const feedbackTimeout = useRef<ReturnType<typeof setTimeout> | null>(null)
@@ -31,16 +32,19 @@ export function AddToCart({ product }: AddToCartProps) {
   }
 
   return (
-    <div className="space-y-2">
+    <div className={compact ? undefined : 'space-y-2'}>
       <button
-        className="w-full rounded-full bg-indigo-700 px-5 py-3 font-bold text-white transition hover:bg-indigo-800 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-indigo-600 disabled:cursor-not-allowed disabled:bg-slate-300"
+        className={compact
+          ? 'rounded-full bg-ink px-3 py-2 text-xs font-extrabold text-white shadow-lg transition hover:bg-zinc-700 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-lime disabled:cursor-not-allowed disabled:bg-zinc-300'
+          : 'w-full rounded-full bg-ink px-5 py-3 font-extrabold text-white transition hover:bg-zinc-700 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-lime disabled:cursor-not-allowed disabled:bg-zinc-300'}
         disabled={isOutOfStock}
         onClick={handleAddToCart}
+        aria-label={compact && !isOutOfStock ? 'Add to cart' : undefined}
         type="button"
       >
-        {isOutOfStock ? 'Out of stock' : wasAdded ? 'Added' : 'Add to cart'}
+        {isOutOfStock ? 'Out of stock' : wasAdded ? 'Added' : compact ? '+ Add' : 'Add to cart'}
       </button>
-      <p aria-live="polite" className="min-h-5 text-sm font-medium text-emerald-700">
+      <p aria-live="polite" className={compact ? 'sr-only' : 'min-h-5 text-sm font-medium text-emerald-700'}>
         {wasAdded && !isOutOfStock ? 'Added to cart' : null}
       </p>
     </div>

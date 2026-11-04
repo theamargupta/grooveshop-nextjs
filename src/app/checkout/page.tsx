@@ -51,10 +51,10 @@ export default function CheckoutPage() {
   if (cart.items.length === 0) {
     return (
       <main className="mx-auto w-full max-w-3xl px-5 py-16 text-center sm:px-8">
-        <p className="text-sm font-bold uppercase tracking-[0.2em] text-indigo-700">Checkout</p>
-        <h1 className="mt-3 text-4xl font-black tracking-tight text-slate-950">Your cart is empty.</h1>
-        <p className="mt-4 text-slate-600">Add an item before starting checkout.</p>
-        <Link className="mt-8 inline-flex rounded-full bg-indigo-700 px-5 py-3 font-bold text-white hover:bg-indigo-800 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-indigo-600" href="/products">
+        <p className="text-sm font-extrabold uppercase tracking-[0.18em] text-zinc-500">Checkout</p>
+        <h1 className="mt-3 text-4xl font-extrabold tracking-tight text-ink">Your cart is empty.</h1>
+        <p className="mt-4 text-zinc-600">Add an item before starting checkout.</p>
+        <Link className="mt-8 inline-flex rounded-full bg-ink px-5 py-3 font-extrabold text-white hover:bg-zinc-700 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-lime" href="/products">
           Browse products
         </Link>
       </main>
@@ -63,11 +63,11 @@ export default function CheckoutPage() {
 
   return (
     <main className="mx-auto w-full max-w-5xl px-5 py-10 sm:px-8 sm:py-14">
-      <p className="text-sm font-bold uppercase tracking-[0.2em] text-indigo-700">Checkout</p>
-      <h1 className="mt-2 text-4xl font-black tracking-tight text-slate-950">Where should we send it?</h1>
+      <p className="text-sm font-extrabold uppercase tracking-[0.18em] text-zinc-500">Checkout</p>
+      <h1 className="mt-2 text-4xl font-extrabold tracking-tight text-ink">Where should we send it?</h1>
       <div className="mt-9 grid gap-8 lg:grid-cols-[1fr_19rem] lg:items-start">
-        <form className="rounded-2xl border border-slate-200 bg-white p-6 sm:p-8" noValidate onSubmit={submitOrder}>
-          <h2 className="text-xl font-black text-slate-950">Delivery address</h2>
+        <form className="rounded-2xl border border-line bg-white p-6 shadow-sm sm:p-8" noValidate onSubmit={submitOrder}>
+          <h2 className="text-xl font-extrabold text-ink">Delivery address</h2>
           <div className="mt-6 grid gap-5 sm:grid-cols-2">
             {fields.map((field) => {
               const error = errors[field.name]
@@ -76,11 +76,11 @@ export default function CheckoutPage() {
 
               return (
                 <div className={field.name === 'address' ? 'sm:col-span-2' : undefined} key={field.name}>
-                  <label className="block text-sm font-bold text-slate-800" htmlFor={inputId}>{field.label}</label>
+                  <label className="block text-sm font-extrabold text-zinc-800" htmlFor={inputId}>{field.label}</label>
                   <input
                     aria-describedby={error === undefined ? undefined : errorId}
                     aria-invalid={error === undefined ? undefined : true}
-                    className="mt-2 w-full rounded-lg border border-slate-300 px-3 py-2.5 text-slate-950 outline-none transition focus:border-indigo-600 focus:ring-2 focus:ring-indigo-100"
+                    className="mt-2 w-full rounded-xl border border-line px-4 py-3 text-ink outline-none transition focus:border-ink focus:ring-2 focus:ring-lime"
                     id={inputId}
                     name={field.name}
                     onChange={(event) => updateField(field.name, event.target.value)}
@@ -92,23 +92,23 @@ export default function CheckoutPage() {
               )
             })}
           </div>
-          <button className="mt-8 w-full rounded-full bg-indigo-700 px-5 py-3 font-bold text-white hover:bg-indigo-800 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-indigo-600" type="submit">
+          <button className="mt-8 w-full rounded-full bg-ink px-5 py-3 font-extrabold text-white hover:bg-zinc-700 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-lime" type="submit">
             Place order
           </button>
         </form>
-        <aside className="rounded-2xl border border-slate-200 bg-white p-6">
-          <h2 className="text-lg font-black text-slate-950">Order summary</h2>
+        <aside className="rounded-2xl border border-line bg-white p-6 shadow-sm">
+          <h2 className="text-lg font-extrabold text-ink">Order summary</h2>
           <ul className="mt-5 space-y-3 text-sm">
             {cart.items.map((item) => (
               <li className="flex items-start justify-between gap-3" key={item.productId}>
-                <span className="text-slate-700">{item.name} <span className="text-slate-500">× {item.quantity}</span></span>
-                <span className="shrink-0 font-semibold text-slate-950">{formatPrice(item.lineTotal, cart.currency)}</span>
+                <span className="text-zinc-700">{item.name} <span className="text-zinc-500">× {item.quantity}</span></span>
+                <span className="shrink-0 font-extrabold text-ink">{formatPrice(item.lineTotal, cart.currency)}</span>
               </li>
             ))}
           </ul>
-          <div className="mt-5 flex items-center justify-between border-t border-slate-200 pt-5">
-            <span className="font-semibold text-slate-700">Subtotal</span>
-            <span className="text-xl font-black text-slate-950">{formatPrice(cart.subtotal, cart.currency)}</span>
+          <div className="mt-5 flex items-center justify-between border-t border-line pt-5">
+            <span className="font-bold text-zinc-700">Subtotal</span>
+            <span className="text-xl font-extrabold text-ink">{formatPrice(cart.subtotal, cart.currency)}</span>
           </div>
         </aside>
       </div>

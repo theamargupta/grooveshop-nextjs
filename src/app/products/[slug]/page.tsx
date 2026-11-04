@@ -29,34 +29,36 @@ async function ProductDetails({ params }: Pick<PageProps<'/products/[slug]'>, 'p
 
   return (
     <main className="mx-auto w-full max-w-7xl px-5 py-10 sm:px-8 sm:py-14">
+      <p className="mb-7 text-sm font-bold text-zinc-500">Home <span aria-hidden="true">›</span> Products <span aria-hidden="true">›</span> {product.name}</p>
       <article className="grid gap-10 lg:grid-cols-2 lg:items-start">
         <Image
           alt={product.name}
-          className="aspect-square w-full rounded-3xl bg-slate-100 object-cover"
+          className="aspect-square w-full rounded-3xl bg-[#edf0df] object-cover"
           height={900}
           priority
           sizes="(max-width: 1024px) 100vw, 50vw"
           src={product.image}
           width={900}
         />
-        <div className="space-y-6">
+        <div className="rounded-3xl bg-white p-6 shadow-sm ring-1 ring-line sm:p-8">
           <div>
-            <p className="text-sm font-bold uppercase tracking-[0.2em] text-indigo-700">{product.categoryName}</p>
-            <h1 className="mt-2 text-4xl font-black tracking-tight text-slate-950 sm:text-5xl">{product.name}</h1>
+            <p className="text-sm font-extrabold uppercase tracking-[0.18em] text-zinc-500">{product.categoryName}</p>
+            <h1 className="mt-2 text-4xl font-extrabold tracking-tight text-ink sm:text-5xl">{product.name}</h1>
           </div>
-          <div className="flex items-baseline gap-3">
-            <span className="text-3xl font-black text-slate-950">{formatPrice(product.finalPrice, product.currency)}</span>
-            {isOnSale && priorPrice !== null ? <del className="text-lg text-slate-500">{formatPrice(priorPrice, product.currency)}</del> : null}
-            {discount !== null ? <span className="rounded-full bg-rose-100 px-2.5 py-1 text-sm font-bold text-rose-700">-{discount}%</span> : null}
+          <div className="mt-6 flex items-baseline gap-3">
+            <span className="text-3xl font-extrabold text-ink">{formatPrice(product.finalPrice, product.currency)}</span>
+            {isOnSale && priorPrice !== null ? <del className="text-lg font-bold text-zinc-400">{formatPrice(priorPrice, product.currency)}</del> : null}
+            {discount !== null ? <span className="rounded-full bg-lime px-2.5 py-1 text-sm font-extrabold text-ink">-{discount}%</span> : null}
           </div>
-          <p className="text-base leading-7 text-slate-700">{product.description}</p>
-          <p className="text-sm font-semibold text-slate-700" data-stock={product.stock === 0 ? 'out-of-stock' : 'in-stock'}>
+          <p className="mt-1 text-xs font-medium text-zinc-500">Lowest price in 30 days</p>
+          <p className="mt-6 text-base leading-7 text-zinc-600">{product.description}</p>
+          <p className="mt-5 text-sm font-extrabold text-zinc-700" data-stock={product.stock === 0 ? 'out-of-stock' : 'in-stock'}>
             {product.stock === 0 ? 'Out of stock' : `${product.stock} in stock`}
           </p>
-          <p aria-label={`${product.reviewAverage} out of 5 stars from ${product.reviewCount} reviews`} className="text-sm font-medium text-slate-700">
-            <span aria-hidden="true">★</span> {product.reviewAverage.toFixed(1)} ({product.reviewCount} reviews)
+          <p aria-label={`${product.reviewAverage} out of 5 stars from ${product.reviewCount} reviews`} className="mt-3 text-sm font-bold text-zinc-600">
+            <span aria-hidden="true" className="text-amber">★★★★★</span> {product.reviewAverage.toFixed(1)} · {product.reviewCount}
           </p>
-          <AddToCart product={product} />
+          <div className="mt-7"><AddToCart product={product} /></div>
         </div>
       </article>
     </main>
