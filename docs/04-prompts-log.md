@@ -25,4 +25,19 @@ Format per entry:
 - Decision: Full 1:1 port is infeasible and not what's graded → port core commerce
   flow with full pipeline + reports; mock data from OpenAPI schema.
 
+### [Phase 1] Scaffold + test tooling + first TDD cycle — 2026-11-04
+- Tool: Claude Code (Opus) — plan/setup; CLI for scaffold
+- Goal: Stand up Next.js with a proven test pipeline, via one real red→green cycle.
+- Steps: `create-next-app` (Next 16.4.5, React 19.3, TS, Tailwind 4, App Router, src-dir);
+  added Vitest + Testing Library + Playwright + v8 coverage.
+- Gotcha fixed: npm ERESOLVE — `@types/node@^20` (create-next-app) vs vitest/vite needing
+  `@types/node` 22+/24+. Root fix: bumped `@types/node` to `^24` (matches Node v24 runtime).
+  Source: the npm ERESOLVE peer-range output itself.
+- TDD: wrote `docs/specs/price-format.md` → red test `format-price.test.ts` (suite red,
+  module missing) → impl `format-price.ts` → **green, 5/5**.
+- Vitest config from official Next.js docs:
+  https://github.com/vercel/next.js/blob/canary/docs/01-app/02-guides/testing/vitest.mdx
+- Scripts: `test`, `test:run`, `test:coverage`, `test:e2e`.
+
 <!-- next entries appended during the build -->
+
