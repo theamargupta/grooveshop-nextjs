@@ -7,6 +7,14 @@ end-to-end video, and a security audit.
 
 **Live demo:** https://grooveshop-nextjs.vercel.app
 
+**Walkthrough video (16 min):** [`docs/recording/agentic-journey.mp4`](docs/recording/agentic-journey.mp4) —
+a narrated tour of the agentic build: the scope decision, the build loop, the Opus-leader /
+Codex-lane model mix, tests + coverage, the honest debugging beats (the next/image bug, the
+license finding), the security audit, the production proof, and the demo-match iteration.
+Narration script: [`docs/recording/narration.md`](docs/recording/narration.md); it is fully
+reproducible via `scripts/tts.mjs` (ElevenLabs), `scripts/make-cards.mjs`,
+`scripts/capture-app.mjs`, and `scripts/stitch.mjs` (ffmpeg).
+
 > Take-home for Kombee (CTO round). The source is a Nuxt 4, multi-tenant, server-rendered
 > storefront (~613 Vue components, 82 routes) whose data comes from a separate Django API.
 > A full 1:1 port is neither feasible nor the point — this delivers a **complete vertical
@@ -41,7 +49,7 @@ npm run build && npm start   # production
 
 | Area | Command | Report |
 |---|---|---|
-| Unit tests + coverage | `npm run test:coverage` | `docs/reports/coverage-summary.md` (89% on lib+components) |
+| Unit tests + coverage | `npm run test:coverage` | `docs/reports/coverage-summary.md` (81 tests, 87% on lib+components) |
 | E2E (Playwright) + video | `npm run test:e2e` | `docs/reports/e2e-summary.md`, video in `docs/reports/e2e-video/` |
 | Security audit | `npm audit` | `docs/reports/security-audit.md` (0 prod vulns, headers live) |
 

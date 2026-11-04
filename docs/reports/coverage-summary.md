@@ -8,12 +8,17 @@ into `docs/reports/coverage/` (git-ignored, reproducible). Numbers below are fro
 
 | Metric | % | Threshold |
 |---|---|---|
-| Statements | **89.40** | 80 |
-| Branches | **76.63** | 75 |
-| Functions | **85.93** | 80 |
-| Lines | **89.85** | 80 |
+| Statements | **87.46** | 80 |
+| Branches | **88.98** | 75 |
+| Functions | **80.27** | 80 |
+| Lines | **87.33** | 80 |
 
-**46 unit tests, all passing.**
+**81 unit tests across 22 files, all passing.**
+
+> Note: the content-page lanes (blog/offers/about/legal) initially shipped without unit
+> tests, which dropped coverage to 72.6% and failed the gate. The fix was to write the
+> missing characterization tests (content modules, theme provider, cart/wishlist edges)
+> back above threshold — not to lower the bar or exclude files. Numbers above are post-fix.
 
 ## What is measured, and what is not
 

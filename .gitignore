@@ -80,4 +80,3 @@ docs/reports/playwright-report/
 # Recording build outputs (large/binary — reproducible from narration.md + scripts)
 /docs/recording/audio/
 /docs/recording/visuals/
-/docs/recording/agentic-journey.mp4
