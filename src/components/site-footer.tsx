@@ -2,7 +2,7 @@ import Link from 'next/link'
 
 const columns = [
   ['Shop', [['Shop all products', '/products'], ['Audio', '/products?category=audio'], ['Wearables', '/products?category=wearables'], ['Accessories', '/products?category=accessories']]],
-  ['Help', [['Shipping', '/products'], ['Returns', '/products'], ['Contact us', '/products'], ['FAQ', '/products']]],
+  ['Help', [['Shipping', '/returns'], ['Returns', '/returns'], ['Contact us', '/contact'], ['FAQ', '/about']]],
   ['Follow', [['Instagram', '/products'], ['TikTok', '/products'], ['Pinterest', '/products']]],
 ] as const
 
