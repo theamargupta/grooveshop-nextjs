@@ -63,7 +63,16 @@ Format per entry:
 - Review: again reverted `--webpack` → Turbopack (sandbox note). Gate on main: 30 tests green,
   tsc+lint clean, build OK (`/products/[slug]` route present).
 
+### [Phase 5] Cart page + Checkout — Codex lane `gs-P5-checkout` — 2026-11-04
+- Opus contract: `docs/specs/checkout.md` + red tests for pure `validateCheckout`.
+- Codex built: `validate.ts`, `/cart` (qty stepper, remove, subtotal, empty state), `/checkout`
+  (order summary + validated address form + mock place-order → clear cart), `/checkout/success`.
+- Codex **blocked on commit** (its sandbox can't run the Turbopack build to reach its done-gate),
+  so the leader committed the work after verifying on the dev machine.
+- Gate on merged main: 35 tests green, tsc+lint clean, build OK (`/cart`, `/checkout`, `/checkout/success`).
+
 <!-- next entries appended during the build -->
+
 
 
 
