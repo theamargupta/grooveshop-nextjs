@@ -47,11 +47,11 @@ async function ProductResults({ searchParams }: Pick<PageProps<'/products'>, 'se
         <ProductSidebar brands={brands} categories={categories} colors={colors} />
         <div>
           <div className="mb-5 flex items-center justify-between gap-4">
-            <p className="text-sm font-extrabold text-zinc-600">{products.length} products</p>
-            <button className="rounded-full border border-line bg-white px-4 py-2 text-sm font-bold text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lime" type="button">Sort: featured⌄</button>
+            <p className="text-sm font-extrabold text-muted">{products.length} products</p>
+            <button className="rounded-full border border-line bg-surface px-4 py-2 text-sm font-bold text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-lime" type="button">Sort: featured⌄</button>
           </div>
           <ProductGrid products={products} />
-          {products.length > 0 ? <nav aria-label="Pagination" className="mt-10 flex justify-center gap-2"><span aria-current="page" className="grid size-10 place-items-center rounded-full bg-ink text-sm font-extrabold text-white">1</span><span className="grid size-10 place-items-center rounded-full border border-line bg-white text-sm font-extrabold text-zinc-500">2</span></nav> : null}
+          {products.length > 0 ? <nav aria-label="Pagination" className="mt-10 flex justify-center gap-2"><span aria-current="page" className="grid size-10 place-items-center rounded-full bg-ink text-sm font-extrabold text-white">1</span><span className="grid size-10 place-items-center rounded-full border border-line bg-surface text-sm font-extrabold text-muted">2</span></nav> : null}
         </div>
       </section>
     </>
@@ -62,12 +62,12 @@ export default function ProductsPage({ searchParams }: PageProps<'/products'>) {
   return (
     <main className="mx-auto w-full max-w-7xl px-5 py-10 sm:px-8 sm:py-14">
       <div className="mb-8 space-y-3">
-        <p className="text-sm font-bold text-zinc-500">Home <span aria-hidden="true">›</span> Products</p>
-        <p className="text-sm font-extrabold uppercase tracking-[0.18em] text-zinc-500">The collection</p>
-        <h1 className="text-4xl font-extrabold tracking-tight text-ink sm:text-5xl">Find your next everyday essential.</h1>
-        <p className="max-w-2xl text-zinc-600">Gear that sounds better, moves further, and keeps your everyday rhythm in flow.</p>
+        <p className="text-sm font-bold text-muted">Home <span aria-hidden="true">›</span> Products</p>
+        <p className="text-sm font-extrabold uppercase tracking-[0.18em] text-muted">The collection</p>
+        <h1 className="text-4xl font-extrabold tracking-tight text-foreground sm:text-5xl">Find your next everyday essential.</h1>
+        <p className="max-w-2xl text-muted">Gear that sounds better, moves further, and keeps your everyday rhythm in flow.</p>
       </div>
-      <Suspense fallback={<div className="h-36 animate-pulse rounded-2xl bg-slate-100" />}>
+      <Suspense fallback={<div className="h-36 animate-pulse rounded-2xl bg-surface" />}>
         <ProductResults searchParams={searchParams} />
       </Suspense>
     </main>

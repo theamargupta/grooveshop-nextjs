@@ -16,8 +16,15 @@ const nextConfig: NextConfig = {
   cacheComponents: true,
   partialPrefetching: true,
   images: {
-    // The product placeholders are our own local SVGs. next/image blocks SVG
-    // optimization by default; allow it, sandboxed to neutralise any script in an SVG.
+    // Product images are our own local vector SVGs — they scale losslessly and
+    // gain nothing from raster optimization. Serving them unoptimized bypasses the
+    // /_next/image optimizer and its on-disk cache entirely. That matters: the
+    // optimizer cache (keyed by url+accept+w+q, 4h TTL) had served STALE entries
+    // from an earlier era when these files were "OP"-style initials placeholders,
+    // so browsers saw "OP/SM" while the real glyph SVGs sat on disk. Unoptimized =
+    // what's in /public is exactly what ships, with no cache layer to go stale.
+    unoptimized: true,
+    // Kept for defence-in-depth: still neutralise any script inside an SVG.
     dangerouslyAllowSVG: true,
     contentDispositionType: 'attachment',
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",

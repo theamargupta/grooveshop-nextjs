@@ -7,6 +7,6 @@ const stats = [
 
 export function HomeStats() {
   return <section aria-label="GrooveShop by the numbers" className="mx-auto grid w-full max-w-7xl grid-cols-2 gap-px bg-line sm:grid-cols-4">
-    {stats.map(([value, copy]) => <div className="bg-background px-5 py-9 text-center" key={value}><p className="text-3xl font-extrabold tracking-tight text-ink">{value}</p><p className="mt-2 text-sm font-medium text-zinc-600">{copy}</p></div>)}
+    {stats.map(([value, copy]) => <div className="bg-background px-5 py-9 text-center" key={value}><p className="text-3xl font-extrabold tracking-tight text-foreground">{value}</p><p className="mt-2 text-sm font-medium text-muted">{copy}</p></div>)}
   </section>
 }
