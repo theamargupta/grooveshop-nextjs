@@ -88,3 +88,7 @@ Format per entry:
 
 
 
+### [Phase 8] Security audit — leader (Opus) — 2026-11-04
+- `npm audit`: 0 prod vulnerabilities; 16 dev-only moderate (not shipped). No `dangerouslySetInnerHTML`/`eval`/`process.env` in src.
+- Added 5 baseline security headers in `next.config.ts`; VERIFIED live via `curl -sI` on a prod build.
+- Report: `docs/reports/security-audit.md` (incl. CSP-with-nonce as documented follow-up).
