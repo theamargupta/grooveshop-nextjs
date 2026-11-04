@@ -71,7 +71,19 @@ Format per entry:
   so the leader committed the work after verifying on the dev machine.
 - Gate on merged main: 35 tests green, tsc+lint clean, build OK (`/cart`, `/checkout`, `/checkout/success`).
 
+### [Phase 6] Unit coverage → 89% — Codex lane `gs-P6-coverage` — 2026-11-04
+- Codex added Testing-Library tests for the uncovered client components + cart provider.
+- Coverage (lib+components) 89.4/76.6/85.9/89.9, 46 tests; thresholds enforced in vitest config.
+- Report: `docs/reports/coverage-summary.md`. Pages (RSC) excluded — covered by E2E.
+
+### [Phase 7] Playwright E2E + video — leader (Opus) — 2026-11-04
+- Opus wrote `playwright.config.ts` (`video: 'on'`, bundled headless chromium shell) + `e2e/shop-flow.spec.ts`.
+- Ran against a prod build on dev machine (Codex sandbox can't run a browser). **2 specs pass.**
+- Three *test* selector bugs fixed (cart eyebrow vs h1; `Address` also matched `Email address`;
+  success text ×3) — app behaviour was correct. Video: `docs/reports/e2e-video/full-purchase-flow.webm`.
+
 <!-- next entries appended during the build -->
+
 
 
 
