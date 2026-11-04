@@ -1,0 +1,29 @@
+# deps / build
+node_modules/
+.next/
+out/
+dist/
+coverage/
+
+# env / secrets
+.env
+.env.*
+!.env.example
+
+# .claude — ignore the scratch, keep the tooling (agents/commands/hooks/rules/settings.json stay tracked)
+.claude/messages/          # Rule 8 drafts, mine alone
+.claude/tmp/
+.claude/worktrees/
+.claude/settings.local.json  # machine-specific paths + permission grants
+.claude/**/.DS_Store
+
+# the cloned source repo is study-only, not part of our app
+source-nuxt/
+
+# os / editor
+.DS_Store
+*.log
+
+# playwright
+test-results/
+playwright-report/
