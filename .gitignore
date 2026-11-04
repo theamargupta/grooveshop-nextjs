@@ -68,3 +68,7 @@ source-nuxt/
 # playwright
 test-results/
 playwright-report/
+
+# Playwright E2E — raw artifacts (regenerable)
+docs/reports/e2e-artifacts/
+docs/reports/playwright-report/
