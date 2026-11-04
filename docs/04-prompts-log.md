@@ -48,6 +48,22 @@ Format per entry:
 - Opus review + merge: re-ran outside Codex sandbox on merged `main` → **13 tests pass**, tsc clean.
 - Gotcha: tsc scanned the cloned `source-nuxt/` → added it + `.claude/worktrees` to tsconfig `exclude`.
 
+### [Phase 3] Home + Listing — Codex lane `gs-P3-listing` — 2026-11-04
+- Opus contract: `docs/specs/listing.md` + red tests for `ProductCard` / `ProductGrid` (+ jest-dom setup).
+- Codex built: product-card, product-grid, product-filters (client), home, `/products` listing,
+  site-header, 8 placeholder SVGs.
+- Review: Codex set `build --webpack` (its sandbox can't bind Turbopack's CSS port); reverted to
+  default `next build` — Turbopack build verified clean on dev machine.
+- Gate on merged main: 21 tests green, tsc+lint clean, build OK.
+
+### [Phase 4] Cart logic + Product detail — Codex lane `gs-P4-detail` — 2026-11-04
+- Opus contract: `docs/specs/cart-and-detail.md` + 9 red tests for pure `cart-logic`.
+- Codex built: `cart-logic.ts` (pure), `cart-context.tsx` (localStorage, guarded), `add-to-cart.tsx`,
+  cart-count badge, `/products/[slug]` detail page with `generateMetadata` + `notFound()`.
+- Review: again reverted `--webpack` → Turbopack (sandbox note). Gate on main: 30 tests green,
+  tsc+lint clean, build OK (`/products/[slug]` route present).
+
 <!-- next entries appended during the build -->
+
 
 
