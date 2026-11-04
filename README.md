@@ -5,6 +5,8 @@ A production-quality conversion of the core commerce flow of the
 to **Next.js**, built with an agentic AI workflow and delivered with tests, coverage,
 end-to-end video, and a security audit.
 
+**Live demo:** https://grooveshop-nextjs.vercel.app
+
 > Take-home for Kombee (CTO round). The source is a Nuxt 4, multi-tenant, server-rendered
 > storefront (~613 Vue components, 82 routes) whose data comes from a separate Django API.
 > A full 1:1 port is neither feasible nor the point — this delivers a **complete vertical
