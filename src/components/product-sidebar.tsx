@@ -1,10 +1,37 @@
-import type { Category } from '@/lib/types'
+'use client'
+
+import { useCallback } from 'react'
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
+import type { Brand, Category, ProductColor } from '@/lib/types'
+
+type Counted<T> = T & { count: number }
 
 interface ProductSidebarProps {
-  categories: Array<Category & { count: number }>
+  categories: Array<Counted<Category>>
+  brands: Array<Counted<Brand>>
+  colors: Array<Counted<ProductColor>>
 }
 
-export function ProductSidebar({ categories }: ProductSidebarProps) {
+export function ProductSidebar({ categories, brands, colors }: ProductSidebarProps) {
+  const pathname = usePathname()
+  const router = useRouter()
+  const searchParams = useSearchParams()
+  const selectedBrand = searchParams.get('brand') ?? ''
+  const selectedColor = searchParams.get('color') ?? ''
+
+  const updateSearch = useCallback((name: 'brand' | 'color' | 'minPrice' | 'maxPrice', value: string) => {
+    const params = new URLSearchParams(searchParams.toString())
+
+    if (value) {
+      params.set(name, value)
+    } else {
+      params.delete(name)
+    }
+
+    const query = params.toString()
+    router.push(query ? `${pathname}?${query}` : pathname)
+  }, [pathname, router, searchParams])
+
   return (
     <aside aria-label="Product filters sidebar" className="hidden rounded-2xl border border-line bg-white p-5 lg:block">
       <section>
@@ -19,13 +46,25 @@ export function ProductSidebar({ categories }: ProductSidebarProps) {
       </section>
       <section className="mt-7 border-t border-line pt-6">
         <h2 className="text-sm font-extrabold uppercase tracking-[0.16em] text-zinc-500">Price range</h2>
-        <div className="mt-4 h-1 rounded-full bg-zinc-200"><div className="ml-3 h-1 w-3/5 rounded-full bg-ink" /></div>
-        <div className="mt-3 flex justify-between text-xs font-bold text-zinc-500"><span>€0</span><span>€400</span></div>
+        <div className="mt-4 grid grid-cols-2 gap-3">
+          <label className="text-xs font-bold text-zinc-500">Minimum price
+            <input aria-label="Minimum price" className="mt-1 w-full rounded-lg border border-line px-2 py-2 text-sm text-ink" defaultValue={searchParams.get('minPrice') ?? ''} min="0" onChange={(event) => updateSearch('minPrice', event.target.value)} type="number" />
+          </label>
+          <label className="text-xs font-bold text-zinc-500">Maximum price
+            <input aria-label="Maximum price" className="mt-1 w-full rounded-lg border border-line px-2 py-2 text-sm text-ink" defaultValue={searchParams.get('maxPrice') ?? ''} min="0" onChange={(event) => updateSearch('maxPrice', event.target.value)} type="number" />
+          </label>
+        </div>
       </section>
       <section className="mt-7 border-t border-line pt-6">
         <h2 className="text-sm font-extrabold uppercase tracking-[0.16em] text-zinc-500">Brands</h2>
-        <ul className="mt-4 space-y-3 text-sm font-bold text-zinc-700">
-          <li>Groove</li><li>Pulse</li><li>Orbit</li>
+        <ul className="mt-4 space-y-2">
+          {brands.map((brand) => <li key={brand.slug}><button aria-pressed={selectedBrand === brand.slug} className="flex w-full items-center justify-between rounded-lg px-2 py-1 text-left text-sm font-bold text-zinc-700 hover:bg-zinc-100" onClick={() => updateSearch('brand', selectedBrand === brand.slug ? '' : brand.slug)} type="button"><span>{brand.name}</span><span aria-hidden="true" className="text-zinc-400">{brand.count}</span></button></li>)}
+        </ul>
+      </section>
+      <section className="mt-7 border-t border-line pt-6">
+        <h2 className="text-sm font-extrabold uppercase tracking-[0.16em] text-zinc-500">Colors</h2>
+        <ul className="mt-4 space-y-2">
+          {colors.map((color) => <li key={color.name}><button aria-pressed={selectedColor === color.name} className="flex w-full items-center justify-between rounded-lg px-2 py-1 text-left text-sm font-bold text-zinc-700 hover:bg-zinc-100" onClick={() => updateSearch('color', selectedColor === color.name ? '' : color.name)} type="button"><span className="flex items-center gap-2"><span aria-hidden="true" className="size-3 rounded-full border border-zinc-300" style={{ backgroundColor: color.hex }} />{color.name}</span><span aria-hidden="true" className="text-zinc-400">{color.count}</span></button></li>)}
         </ul>
       </section>
     </aside>
