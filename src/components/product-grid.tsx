@@ -9,7 +9,7 @@ interface ProductGridProps {
 export function ProductGrid({ products, columns = 3 }: ProductGridProps) {
   if (products.length === 0) {
     return (
-      <p className="rounded-2xl border border-dashed border-zinc-300 bg-white px-6 py-12 text-center font-medium text-zinc-600">
+      <p className="rounded-2xl border border-dashed border-line bg-surface px-6 py-12 text-center font-medium text-muted">
         No products found
       </p>
     )
